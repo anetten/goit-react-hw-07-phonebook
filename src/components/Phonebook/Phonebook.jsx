@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import css from './Phonebook.module.css';
-import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from '../../redux/contacts/operations';
 
@@ -21,34 +20,33 @@ export const PhoneBook = () => {
 
   const handleAddContact = event => {
     event.preventDefault();
-
     if (!filteredContactsList) {
       return;
     }
 
-    const contactName = event.target.name.value.trim();
-    const contactNumber = event.target.number.value.trim();
+    const formData = { name, number };
 
-    const hasDuplicate = contacts.some(
-      contact => contact.name.toLowerCase() === contactName.toLowerCase()
+    const hasDuplicate = filteredContactsList.some(
+      ({ name, number }) =>
+        name.toLowerCase() === formData.toLowerCase() ||
+        number === formData.number
     );
 
     if (hasDuplicate) {
-      alert(`${contactName} is already in contacts`);
+      alert(`${formData.name} is already in contacts`);
       return;
     }
 
     const newContact = {
-      id: nanoid(),
-      name: contactName,
-      number: contactNumber,
+      ...formData,
     };
-
-    dispatch(addContact(newContact));
+    const action = addContact(newContact);
+    dispatch(action);
 
     setName('');
     setNumber('');
   };
+
   return (
     <div>
       <form className={css.form} action="" onSubmit={handleAddContact}>
@@ -79,5 +77,3 @@ export const PhoneBook = () => {
     </div>
   );
 };
-
-////////
