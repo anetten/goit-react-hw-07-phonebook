@@ -7,25 +7,23 @@ export const PhoneBook = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const contacts = useSelector(state => state.contacts.items);
-  const filter = useSelector(state => state.contacts.filter);
+  const contacts = useSelector(state => state.contacts.contacts.items);
+  const filter = useSelector(state => state.filter.filter);
   const dispatch = useDispatch();
 
   const handleAddContact = event => {
     event.preventDefault();
+    console.log('filter: ', filter);
+    console.log('contacts: ', contacts);
+
     const filteredContactsList = filter
       ? contacts.filter(contact =>
           contact.name.toLowerCase().includes(filter.toLowerCase())
         )
       : contacts;
-
+    console.log('filteredContactsList: ', filteredContactsList);
     const formData = { name, number };
 
-    // const hasDuplicate = filteredContactsList.some(
-    //   ({ name, number }) =>
-    //     name.toLowerCase() === formData.toLowerCase() ||
-    //     number === formData.number
-    // );
     const hasDuplicate = filteredContactsList.some(
       contact =>
         (contact.name &&

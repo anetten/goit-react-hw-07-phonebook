@@ -7,7 +7,7 @@ import css from './Contacts.module.css';
 export const Contacts = () => {
   const filter = useSelector(state => state.filter.filter);
   const contacts = useSelector(state => state.contacts.contacts.items);
-  const isLoading = useSelector(state => state.contacts.isLoading);
+  const isLoading = useSelector(state => state.contacts.contacts.isLoading);
 
   const dispatch = useDispatch();
 
@@ -25,7 +25,7 @@ export const Contacts = () => {
             <ul>
               {contacts
                 .filter(contact =>
-                  contact.name
+                  (contact.name || '')
                     .toLowerCase()
                     .includes(filter.trim().toLowerCase())
                 )
