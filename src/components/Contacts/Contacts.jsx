@@ -5,8 +5,8 @@ import { deleteContact } from '../../redux/contacts/operations';
 import css from './Contacts.module.css';
 
 export const Contacts = () => {
-  const filter = useSelector(state => state.contacts.filter);
-  const contacts = useSelector(state => state.contacts.items);
+  const filter = useSelector(state => state.filter.filter);
+  const contacts = useSelector(state => state.contacts.contacts.items);
   const isLoading = useSelector(state => state.contacts.isLoading);
 
   const dispatch = useDispatch();
