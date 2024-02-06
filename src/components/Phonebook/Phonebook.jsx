@@ -5,7 +5,7 @@ import { addContact } from '../../redux/contacts/operations';
 
 export const PhoneBook = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
 
   const contacts = useSelector(state => state.contacts.contacts.items);
   const filter = useSelector(state => state.filter.filter);
@@ -22,20 +22,19 @@ export const PhoneBook = () => {
         )
       : contacts;
     console.log('filteredContactsList: ', filteredContactsList);
-    const formData = { name, number };
+    const formData = { name, phone };
 
     const hasDuplicate = filteredContactsList.some(
       contact =>
         (contact.name &&
           contact.name.toLowerCase() === formData.name.toLowerCase()) ||
-        contact.number === formData.number
+        contact.phone === formData.phone
     );
 
     if (hasDuplicate) {
       alert(`${formData.name} is already in contacts`);
       return;
     }
-
     const newContact = {
       ...formData,
     };
@@ -43,7 +42,7 @@ export const PhoneBook = () => {
     dispatch(action);
 
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   return (
@@ -65,9 +64,9 @@ export const PhoneBook = () => {
           <input
             className={css.formInput}
             type="tel"
-            name="number"
-            value={number}
-            onChange={e => setNumber(e.target.value)}
+            name="phone"
+            value={phone}
+            onChange={e => setPhone(e.target.value)}
             required
           />
         </label>
